@@ -50,9 +50,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
+
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://postagram-449.netlify.app",
+    req.get('origin'),
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
