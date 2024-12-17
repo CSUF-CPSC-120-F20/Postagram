@@ -27,6 +27,7 @@ const CORS_CFG = {
     fullBackendDomain,
     'https://postagram-e3s2.onrender.com',
     'https://postagram-449.netlify.app',
+     'https://postagram-frontend.onrender.com',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
