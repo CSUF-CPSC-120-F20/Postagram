@@ -27,7 +27,7 @@ const CORS_CFG = {
     fullBackendDomain,
     'https://postagram-e3s2.onrender.com',
     'https://postagram-449.netlify.app',
-     'https://postagram-frontend.onrender.com',
+    'https://postagram-frontend.onrender.com',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -50,31 +50,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  const allowedOrigins = [
-    'http://localhost:5173',
-    `http://localhost:${PORT}`,
-    'http://localhost:3000',
-    fullBackendDomain,
-    'https://postagram-e3s2.onrender.com',
-    'https://postagram-449.netlify.app',
-     'https://postagram-frontend.onrender.com',
-  ];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-       res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-
-  // res.setHeader(
-  //   "Access-Control-Allow-Origin",
-  //   "*",
-  // );
   res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
+    'Access-Control-Allow-Origin',
+    'https://postagram-frontend.onrender.com',
   );
   res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
+    'Access-Control-Allow-Methods',
+    'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers',
   );
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Private-Network", true);
