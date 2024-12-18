@@ -1,12 +1,8 @@
 const getCookie = (req) => {
-  // grab all cookies
-  const { cookie } = req.headers;
-
-  // if no cookies []
-  if (!cookie) return [];
-
-  // return cookie array
-  return cookie.split('; ');
+  const cookies = req.headers.cookie;
+  if (!cookies) return [];
+  return cookies.split(';').map((cookie) => cookie.trim());
 };
+
 
 export default getCookie;
