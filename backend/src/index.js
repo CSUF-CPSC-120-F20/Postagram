@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
@@ -10,6 +11,13 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import postRoutes from './routes/post.js';
 import logger from './utils/logger.js';
+console.log('Environment Variables:', {
+  MONGO_CONN_STRING: process.env.MONGO_CONN_STRING,
+  NODE_PORT: process.env.NODE_PORT,
+  JWT_SECRET: process.env.JWT_SECRET,
+  BACKEND_DOMAIN: process.env.BACKEND_DOMAIN,
+});
+
 
 const PORT = process.env.NODE_PORT || 8000;
 const CONN_STR = process.env.MONGO_CONN_STRING || undefined;
@@ -50,10 +58,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  res.setHeader(
-    'Access-Control-Allow-Origin',
+  const allowedOrigins = [
+    'http://localhost:5173',
+    `http://localhost:${PORT}`,
+    'http://localhost:3000',
+    fullBackendDomain,
+    'https://postagram-e3s2.onrender.com',
+    'https://postagram-449.netlify.app',
     'https://postagram-frontend.onrender.com',
-  );
+  ];
+  
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
   res.setHeader(
     'Access-Control-Allow-Methods',
     'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE',
@@ -62,10 +82,9 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Headers',
     'Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers',
   );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Private-Network", true);
-
-  res.setHeader("Access-Control-Max-Age", 7200);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Private-Network', true);
+  res.setHeader('Access-Control-Max-Age', 7200);
 
   next();
 });
