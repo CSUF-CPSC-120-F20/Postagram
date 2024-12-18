@@ -49,9 +49,20 @@ export const getUser = async (req, res) => {
 
 export const getSelf = async (req, res) => {
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     //  if no username
@@ -101,9 +112,20 @@ export const getAllUsers = async (req, res) => {
 
 export const getMyFollowing = async (req, res) => {
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     //  if no username
@@ -147,9 +169,20 @@ export const createNewFollow = async (req, res) => {
   // grab username to follow from params
   const { username: toFollow } = req.params;
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     //  if no username or user to follow
@@ -190,9 +223,20 @@ export const removeNewFollow = async (req, res) => {
   // grab username to unfollow from params
   const { username: toUnfollow } = req.params;
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     // if no username or user to unfollow

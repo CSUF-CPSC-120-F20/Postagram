@@ -14,9 +14,20 @@ export const createNewPost = async (req, res) => {
   const { title, content, tag } = req.body;
 
   // Grab user username from stored cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     // if no username cookie, user is not logged in
@@ -65,9 +76,20 @@ export const createNewPost = async (req, res) => {
 
 export const getFeedPosts = async (req, res) => {
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     // if no username cookie
@@ -103,9 +125,20 @@ export const updateLikes = async (req, res) => {
   // grab post id and increment from request body
   const { id: postId, increment: toIncrement } = req.body;
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+
+if (!usernameCookie) {
+  return res.status(401).json({
+    error: {
+      message: 'Unauthorized: No username cookie found',
+      isAuthorized: false,
+    },
+  });
+}
+
+const username = usernameCookie.split('=')[1];
+
 
   try {
     // if no username cookie
@@ -177,9 +210,20 @@ export const getPostsBySearch = async (req, res) => {
 
 export const getSelfPosts = async (req, res) => {
   // grab username from cookie
-  const username = getCookie(req)
-    .find((cookie) => cookie.startsWith('username'))
-    .split('=')[1];
+  const cookies = getCookie(req);
+  const usernameCookie = cookies.find((cookie) => cookie.startsWith('username'));
+  
+  if (!usernameCookie) {
+    return res.status(401).json({
+      error: {
+        message: 'Unauthorized: No username cookie found',
+        isAuthorized: false,
+      },
+    });
+  }
+  
+  const username = usernameCookie.split('=')[1];
+  
 
   try {
     // if no username cookie
